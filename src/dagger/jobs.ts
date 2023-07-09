@@ -7,6 +7,7 @@ export const test = async (client: Client, src = ".") => {
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
+    .withWorkdir("/app")
     .withExec(["go", "test", "-v", "./..."]);
   const result = await ctr.stdout();
 
@@ -20,6 +21,7 @@ export const fmt = async (client: Client, src = ".") => {
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
+    .withWorkdir("/app")
     .withExec(["go", "fmt", "./..."]);
   const result = await ctr.stdout();
 
@@ -33,6 +35,7 @@ export const build = async (client: Client, src = ".") => {
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
+    .withWorkdir("/app")
     .withExec(["go", "build"]);
   const result = await ctr.stdout();
 
