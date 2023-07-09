@@ -3,8 +3,8 @@ import { build, fmt, test } from "./jobs.ts";
 
 const gitlabci = new GitlabCI()
   .image("golang:latest")
-  .addJob("test", test)
   .addJob("fmt", fmt)
+  .addJob("test", test)
   .addJob("build", build);
 
 export default gitlabci;
