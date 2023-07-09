@@ -20,7 +20,7 @@ export const fmt = async (client: Client, src = ".") => {
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
-    .withExec(["go", "fmt", "-v", "./..."]);
+    .withExec(["go", "fmt", "./..."]);
   const result = await ctr.stdout();
 
   console.log(result);
