@@ -28,6 +28,7 @@ const { build, test, fmt } = GitLab;
 
 const const pipeline = new GitlabCI()
   .image("golang:latest")
+  .addJob("fmt", fmt)
   .addJob("test", test)
   .addJob("build", build);
 
