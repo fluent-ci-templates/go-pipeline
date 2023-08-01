@@ -45,7 +45,7 @@ import { Dagger } from "https://deno.land/x/go_pipeline/mod.ts";
 
 const { fmt, test, build } = Dagger;
 
-async function pipeline(src = ".") {
+function pipeline(src = ".") {
   connect(async (client: Client) => {
     await fmt(client, src);
     await test(client, src);
@@ -53,5 +53,5 @@ async function pipeline(src = ".") {
   });
 }
 
-await pipeline();
+pipeline();
 ```
