@@ -7,7 +7,7 @@
 A ready-to-use CI/CD Pipeline for your Go projects.
 ## 🚀 Usage
 
-Run the following command:
+Run the following command in your project:
 
 ```bash
 dagger run fluentci go_pipeline
