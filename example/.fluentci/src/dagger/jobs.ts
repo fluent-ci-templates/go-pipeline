@@ -1,9 +1,15 @@
 import Client from "@dagger.io/dagger";
 
+export enum Job {
+  test = "test",
+  fmt = "fmt",
+  build = "build",
+}
+
 export const test = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
   const ctr = client
-    .pipeline("test")
+    .pipeline(Job.test)
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
@@ -19,7 +25,7 @@ export const test = async (client: Client, src = ".") => {
 export const fmt = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
   const ctr = client
-    .pipeline("fmt")
+    .pipeline(Job.fmt)
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
@@ -36,7 +42,7 @@ export const fmt = async (client: Client, src = ".") => {
 export const build = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
   const ctr = client
-    .pipeline("build")
+    .pipeline(Job.build)
     .container()
     .from("golang:latest")
     .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
@@ -47,4 +53,18 @@ export const build = async (client: Client, src = ".") => {
   const result = await ctr.stdout();
 
   console.log(result);
+};
+
+export type JobExec = (client: Client, src?: string) => Promise<void>;
+
+export const runnableJobs: Record<Job, JobExec> = {
+  [Job.test]: test,
+  [Job.fmt]: fmt,
+  [Job.build]: build,
+};
+
+export const jobDescriptions: Record<Job, string> = {
+  [Job.test]: "Run tests",
+  [Job.fmt]: "Format code",
+  [Job.build]: "Build binary",
 };
