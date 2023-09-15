@@ -6,13 +6,15 @@ export enum Job {
   build = "build",
 }
 
+export const exclude = ["vendor", ".git"];
+
 export const test = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
   const ctr = client
     .pipeline(Job.test)
     .container()
     .from("golang:latest")
-    .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
+    .withDirectory("/app", context, { exclude })
     .withWorkdir("/app")
     .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
     .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
@@ -28,7 +30,7 @@ export const fmt = async (client: Client, src = ".") => {
     .pipeline(Job.fmt)
     .container()
     .from("golang:latest")
-    .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
+    .withDirectory("/app", context, { exclude })
     .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
     .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
     .withWorkdir("/app")
@@ -45,7 +47,7 @@ export const build = async (client: Client, src = ".") => {
     .pipeline(Job.build)
     .container()
     .from("golang:latest")
-    .withDirectory("/app", context, { exclude: ["vendor", ".git"] })
+    .withDirectory("/app", context, { exclude })
     .withWorkdir("/app")
     .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
     .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
