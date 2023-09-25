@@ -11,7 +11,7 @@ A ready-to-use CI/CD Pipeline for your Go projects.
 Run the following command in your project:
 
 ```bash
-dagger run fluentci go_pipeline
+fluentci run go_pipeline
 ```
 
 Or, if you want to use it as a template:
@@ -25,7 +25,7 @@ This will create a `.fluentci` folder in your project.
 Now you can run the pipeline with:
 
 ```bash
-dagger run fluentci .
+fluentci run .
 ```
 
 ## Jobs

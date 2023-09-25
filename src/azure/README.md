@@ -34,7 +34,7 @@ steps:
         sudo mv bin/dagger /usr/local/bin
         dagger version
     displayName: Setup Dagger
-  - script: dagger run fluentci go_pipeline
+  - script: fluentci run go_pipeline
     displayName: Run Dagger Pipelines
 
 ```

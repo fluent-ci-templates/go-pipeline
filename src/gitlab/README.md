@@ -40,7 +40,7 @@ Generated file:
 tests:
   extends: .dagger
   script:
-    - dagger run fluentci go_pipeline
+    - fluentci run go_pipeline
 ```
 
 Feel free to edit the template generator at `.fluentci/src/gitlab/config.ts` to your needs.
