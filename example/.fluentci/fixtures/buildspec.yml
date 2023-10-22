@@ -13,7 +13,7 @@ phases:
       - dagger version
   build:
     commands:
-      - dagger run fluentci go_pipeline
+      - fluentci run go_pipeline
   post_build:
     commands:
       - echo Build completed on `date`

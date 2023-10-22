@@ -1,4 +1,4 @@
-import Client from "../../deps.ts";
+import Client, { connect } from "../../deps.ts";
 
 export enum Job {
   test = "test",
@@ -8,56 +8,65 @@ export enum Job {
 
 export const exclude = ["vendor", ".git"];
 
-export const test = async (client: Client, src = ".") => {
-  const context = client.host().directory(src);
-  const ctr = client
-    .pipeline(Job.test)
-    .container()
-    .from("golang:latest")
-    .withDirectory("/app", context, { exclude })
-    .withWorkdir("/app")
-    .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
-    .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
-    .withExec(["go", "test", "-v", "./..."]);
-  const result = await ctr.stdout();
+export const test = async (src = ".") => {
+  await connect(async (client: Client) => {
+    const context = client.host().directory(src);
+    const ctr = client
+      .pipeline(Job.test)
+      .container()
+      .from("golang:latest")
+      .withDirectory("/app", context, { exclude })
+      .withWorkdir("/app")
+      .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
+      .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
+      .withExec(["go", "test", "-v", "./..."]);
+    const result = await ctr.stdout();
 
-  console.log(result);
+    console.log(result);
+  });
+  return "Done";
 };
 
-export const fmt = async (client: Client, src = ".") => {
-  const context = client.host().directory(src);
-  const ctr = client
-    .pipeline(Job.fmt)
-    .container()
-    .from("golang:latest")
-    .withDirectory("/app", context, { exclude })
-    .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
-    .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
-    .withWorkdir("/app")
+export const fmt = async (src = ".") => {
+  await connect(async (client: Client) => {
+    const context = client.host().directory(src);
+    const ctr = client
+      .pipeline(Job.fmt)
+      .container()
+      .from("golang:latest")
+      .withDirectory("/app", context, { exclude })
+      .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
+      .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
+      .withWorkdir("/app")
 
-    .withExec(["go", "fmt", "./..."]);
-  const result = await ctr.stdout();
+      .withExec(["go", "fmt", "./..."]);
+    const result = await ctr.stdout();
 
-  console.log(result);
+    console.log(result);
+  });
+  return "Done";
 };
 
-export const build = async (client: Client, src = ".") => {
-  const context = client.host().directory(src);
-  const ctr = client
-    .pipeline(Job.build)
-    .container()
-    .from("golang:latest")
-    .withDirectory("/app", context, { exclude })
-    .withWorkdir("/app")
-    .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
-    .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
-    .withExec(["go", "build"]);
-  const result = await ctr.stdout();
+export const build = async (src = ".") => {
+  await connect(async (client: Client) => {
+    const context = client.host().directory(src);
+    const ctr = client
+      .pipeline(Job.build)
+      .container()
+      .from("golang:latest")
+      .withDirectory("/app", context, { exclude })
+      .withWorkdir("/app")
+      .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
+      .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
+      .withExec(["go", "build"]);
+    const result = await ctr.stdout();
 
-  console.log(result);
+    console.log(result);
+  });
+  return "Done";
 };
 
-export type JobExec = (client: Client, src?: string) => Promise<void>;
+export type JobExec = (src?: string) => Promise<string>;
 
 export const runnableJobs: Record<Job, JobExec> = {
   [Job.test]: test,

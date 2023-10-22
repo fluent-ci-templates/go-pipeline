@@ -44,7 +44,7 @@ jobs:
             sudo mv bin/dagger /usr/local/bin
             dagger version
       - name: Run Tests and Build
-        run: dagger run fluentci go_pipeline
+        run: fluentci run go_pipeline
 
 ```
 
