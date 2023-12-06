@@ -28,6 +28,14 @@ Now you can run the pipeline with:
 fluentci run .
 ```
 
+## Dagger Module
+
+Use as a [Dagger](https://dagger.io) module:
+
+```sh
+dagger mod install github.com/fluent-ci-templates/go-pipeline@mod
+```
+
 ## Jobs
 
 | Job   | Description        |
