@@ -1,4 +1,7 @@
-import Client, { connect } from "../../deps.ts";
+import { Directory } from "../../deps.ts";
+import { Client } from "../../sdk/client.gen.ts";
+import { connect } from "../../sdk/connect.ts";
+import { getDirectory } from "./lib.ts";
 
 export enum Job {
   test = "test",
@@ -8,9 +11,18 @@ export enum Job {
 
 export const exclude = ["vendor", ".git"];
 
-export const test = async (src = ".") => {
+/**
+ * @function
+ * @description Run tests
+ * @param {string | Directory | undefined} src
+ * @returns {Directory | string}
+ */
+export async function test(
+  src: Directory | string | undefined = "."
+): Promise<string> {
+  let result = "";
   await connect(async (client: Client) => {
-    const context = client.host().directory(src);
+    const context = getDirectory(client, src);
     const ctr = client
       .pipeline(Job.test)
       .container()
@@ -20,16 +32,23 @@ export const test = async (src = ".") => {
       .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
       .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
       .withExec(["go", "test", "-v", "./..."]);
-    const result = await ctr.stdout();
-
-    console.log(result);
+    result = await ctr.stdout();
   });
-  return "Done";
-};
+  return result;
+}
 
-export const fmt = async (src = ".") => {
+/**
+ * @function
+ * @description Format the project
+ * @param {string | Directory | undefined} src
+ * @returns {Directory | string}
+ */
+export async function fmt(
+  src: Directory | string | undefined = "."
+): Promise<Directory | string> {
+  let id = "";
   await connect(async (client: Client) => {
-    const context = client.host().directory(src);
+    const context = getDirectory(client, src);
     const ctr = client
       .pipeline(Job.fmt)
       .container()
@@ -40,16 +59,24 @@ export const fmt = async (src = ".") => {
       .withWorkdir("/app")
 
       .withExec(["go", "fmt", "./..."]);
-    const result = await ctr.stdout();
-
-    console.log(result);
+    await ctr.stdout();
+    id = await ctr.directory("/app/").id();
   });
-  return "Done";
-};
+  return id;
+}
 
-export const build = async (src = ".") => {
+/**
+ * @function
+ * @description Build binary
+ * @param {string | Directory | undefined} src
+ * @returns {Directory | string}
+ */
+export async function build(
+  src: Directory | string | undefined = "."
+): Promise<Directory | string> {
+  let id = "";
   await connect(async (client: Client) => {
-    const context = client.host().directory(src);
+    const context = getDirectory(client, src);
     const ctr = client
       .pipeline(Job.build)
       .container()
@@ -59,14 +86,15 @@ export const build = async (src = ".") => {
       .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
       .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
       .withExec(["go", "build"]);
-    const result = await ctr.stdout();
-
-    console.log(result);
+    await ctr.stdout();
+    id = await ctr.directory("/app/").id();
   });
-  return "Done";
-};
+  return id;
+}
 
-export type JobExec = (src?: string) => Promise<string>;
+export type JobExec = (
+  src: Directory | string | undefined
+) => Promise<Directory | string>;
 
 export const runnableJobs: Record<Job, JobExec> = {
   [Job.test]: test,

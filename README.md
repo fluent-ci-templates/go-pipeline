@@ -36,10 +36,10 @@ fluentci run .
 | test  | Run your tests     |
 | build | Build your project |
 
-```graphql
-build(src: String!): String
-fmt(src: String!): String
-test(src: String!): String
+```typescript
+build(src: Directory | string): Promise<Directory | string>
+fmt(src:  Directory | string!): Promise<Directory | string>
+test(src:  Directory | string): Promise<string>
 ```
 
 ## Programmatic usage
@@ -47,7 +47,7 @@ test(src: String!): String
 You can also use this pipeline programmatically:
 
 ```ts
-import { fmt, test, build } from "https://pkg.fluentci.io/go_pipeline@v0.8.0/mod.ts";
+import { fmt, test, build } from "https://pkg.fluentci.io/go_pipeline@v0.9.0/mod.ts";
 
 await fmt();
 await test();
