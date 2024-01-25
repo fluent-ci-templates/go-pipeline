@@ -18,22 +18,21 @@ export const exclude = ["vendor", ".git"];
  * @returns {Directory | string}
  */
 export async function test(
-  src: Directory | string | undefined = "."
+  client: Client,
+  src: Directory | string | undefined = ".",
 ): Promise<string> {
   let result = "";
-  await connect(async (client: Client) => {
-    const context = getDirectory(client, src);
-    const ctr = client
-      .pipeline(Job.test)
-      .container()
-      .from("golang:latest")
-      .withDirectory("/app", context, { exclude })
-      .withWorkdir("/app")
-      .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
-      .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
-      .withExec(["go", "test", "-v", "./..."]);
-    result = await ctr.stdout();
-  });
+  const context = getDirectory(client, src);
+  const ctr = client
+    .pipeline(Job.test)
+    .container()
+    .from("golang:latest")
+    .withDirectory("/app", context, { exclude })
+    .withWorkdir("/app")
+    .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
+    .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
+    .withExec(["go", "test", "-v", "./..."]);
+  result = await ctr.stdout();
   return result;
 }
 
@@ -44,25 +43,22 @@ export async function test(
  * @returns {Directory | string}
  */
 export async function fmt(
-  src: Directory | string | undefined = "."
+  client: Client,
+  src: Directory | string | undefined = ".",
 ): Promise<Directory | string> {
   let id = "";
-  await connect(async (client: Client) => {
-    const context = getDirectory(client, src);
-    const ctr = client
-      .pipeline(Job.fmt)
-      .container()
-      .from("golang:latest")
-      .withDirectory("/app", context, { exclude })
-      .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
-      .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
-      .withWorkdir("/app")
-
-      .withExec(["go", "fmt", "./..."]);
-    await ctr.stdout();
-    id = await ctr.directory("/app/").id();
-  });
-  return id;
+  const context = getDirectory(client, src);
+  const ctr = client
+    .pipeline(Job.fmt)
+    .container()
+    .from("golang:latest")
+    .withDirectory("/app", context, { exclude })
+    .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
+    .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
+    .withWorkdir("/app")
+    .withExec(["go", "fmt", "./..."]);
+  await ctr.stdout();
+  return await ctr.directory("/app/").id();
 }
 
 /**
@@ -72,28 +68,27 @@ export async function fmt(
  * @returns {Directory | string}
  */
 export async function build(
-  src: Directory | string | undefined = "."
+  client: Client,
+  src: Directory | string | undefined = ".",
 ): Promise<Directory | string> {
   let id = "";
-  await connect(async (client: Client) => {
-    const context = getDirectory(client, src);
-    const ctr = client
-      .pipeline(Job.build)
-      .container()
-      .from("golang:latest")
-      .withDirectory("/app", context, { exclude })
-      .withWorkdir("/app")
-      .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
-      .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
-      .withExec(["go", "build"]);
-    await ctr.stdout();
-    id = await ctr.directory("/app/").id();
-  });
-  return id;
+  const context = getDirectory(client, src);
+  const ctr = client
+    .pipeline(Job.build)
+    .container()
+    .from("golang:latest")
+    .withDirectory("/app", context, { exclude })
+    .withWorkdir("/app")
+    .withMountedCache("/go/pkg/mod", client.cacheVolume("go-mod"))
+    .withMountedCache("/root/.cache/go-build", client.cacheVolume("go-build"))
+    .withExec(["go", "build"]);
+  await ctr.stdout();
+  return await ctr.directory("/app/").id();
 }
 
 export type JobExec = (
-  src: Directory | string | undefined
+  client: Client,
+  src: Directory | string | undefined,
 ) => Promise<Directory | string>;
 
 export const runnableJobs: Record<Job, JobExec> = {
