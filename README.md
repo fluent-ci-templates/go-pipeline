@@ -61,7 +61,7 @@ test(src?:  Directory | string = "."): Promise<string>
 You can also use this pipeline programmatically:
 
 ```ts
-import { fmt, test, build } from "https://pkg.fluentci.io/go_pipeline@v0.9.1/mod.ts";
+import { fmt, test, build } from "https://pkg.fluentci.io/go_pipeline@v0.9.2/mod.ts";
 
 await fmt();
 await test();
