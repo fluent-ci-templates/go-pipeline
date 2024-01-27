@@ -18,7 +18,7 @@ jobs:
           dagger version
       - name: Run Dagger Pipelines
         run: |
-          dagger query --doc fmt.gql
-          dagger query --doc test.gql
-          dagger query --doc build.gql
+          dagger call fmt --src .
+          dagger call test --src .
+          dagger call build --src .
         working-directory: example
