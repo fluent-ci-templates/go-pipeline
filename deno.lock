@@ -1,8 +1,36 @@
 {
   "version": "3",
+  "packages": {
+    "specifiers": {
+      "npm:nexus": "npm:nexus@1.3.0_graphql@16.8.1"
+    },
+    "npm": {
+      "graphql@16.8.1": {
+        "integrity": "sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==",
+        "dependencies": {}
+      },
+      "iterall@1.3.0": {
+        "integrity": "sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==",
+        "dependencies": {}
+      },
+      "nexus@1.3.0_graphql@16.8.1": {
+        "integrity": "sha512-w/s19OiNOs0LrtP7pBmD9/FqJHvZLmCipVRt6v1PM8cRUYIbhEswyNKGHVoC4eHZGPSnD+bOf5A3+gnbt0A5/A==",
+        "dependencies": {
+          "graphql": "graphql@16.8.1",
+          "iterall": "iterall@1.3.0",
+          "tslib": "tslib@2.6.2"
+        }
+      },
+      "tslib@2.6.2": {
+        "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==",
+        "dependencies": {}
+      }
+    }
+  },
   "remote": {
     "https://cdn.jsdelivr.net/gh/tsirysndr/tar@v0.1.1/deps.ts": "096395daebc7ed8a18f0484e4ffcc3a7f70e50946735f7df9611a7fcfd8272cc",
     "https://cdn.jsdelivr.net/gh/tsirysndr/tar@v0.1.1/mod.ts": "e269d71c72ae68e82c1960e5db2a0c7419c97c9683ef717de0ab75d90f364713",
+    "https://cdn.jsdelivr.net/gh/tsirysndr/tar@v0.1.1/src/interface.ts": "3d4371b7590e90af7b191b93f8681ea7add6f5dca0d26a4d171701de09707c4f",
     "https://cdn.jsdelivr.net/gh/tsirysndr/tar@v0.1.1/src/tar.ts": "9b02eaaa784b225ad7a23d2769cd492adf113ea7c11c02e3646849e98f4ae43b",
     "https://cdn.skypack.dev/-/lodash@v4.17.21-K6GEbP02mWFnLA45zAmi/dist=es2019,mode=imports/optimized/lodash.js": "10c4df47937ffc78548d136dd535a021df5f57182a653260d715c0690dd22978",
     "https://cdn.skypack.dev/lodash": "8280de0b3efd87f06ea0eb330d15b8de32c059556023b8c6524e9eb9e4844dc0",
@@ -224,6 +252,24 @@
     "https://esm.sh/yaml@v2.3.1": "0b42df3dec58b0999df5639390c02346de67b8dae76717a156189855fb616858",
     "https://nix.fluentci.io/v0.5.3/deps.ts": "469c1f084eda8d2ee78135b0bf4f9490b80b36d8d0bdb88594167133a918da8e",
     "https://nix.fluentci.io/v0.5.3/src/dagger/steps.ts": "b766f4fa9624a032e7af884a5ca47bc666a529c4a472d38b74b55ca0d63cf81d",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/deps.ts": "6ee8e51501e9e08fe007d5f262268c9272050f8453bfccf0c60c4f81d129a0fd",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/sdk/builder.ts": "608f7bcae267d7cac74ee3bd8cb3b35697b1002c917a3ad01901768c2d4de8bf",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/sdk/client.gen.ts": "0e3ee73d81868160c14d7577dbc79d4c3a339fa920b767be984449666a1f9879",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/sdk/client.ts": "b879f0a00d27c231bfce8ec70ad3f320d5d5b40b3f58f1af37303639d3f18c63",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/sdk/context.ts": "827aedd9ef20c4c9ab8b53f3f466bc85de62860e031cad91d248ce2f994c3e19",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/sdk/utils.ts": "02826cbba0b5dec6f4ec7085002abc9e6dca727c0dc0b922bdec43b539412fd3",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/src/dagger/jobs.ts": "b6b2362b784419dc34e63ab8cd722d39c13242f7f9cdca8cc1d2b5b4104b80a0",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/src/dagger/lib.ts": "6e30556dfcad02c695f214d53f728f1a7f7bfb0b6654a96dbce6f4ca7f4eb7a7",
+    "https://pkg.fluentci.io/snyk_pipeline@v0.4.1/src/dagger/list_jobs.ts": "bac3d70becf5fc09e9a6853bdb769a1079537feaf6fb083b85e1e2f26b9bd12f",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/deps.ts": "e5b107b746a8e6b2cdff1cdafe53bec786769f372623bd2a09d0800ccccd811f",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/sdk/builder.ts": "608f7bcae267d7cac74ee3bd8cb3b35697b1002c917a3ad01901768c2d4de8bf",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/sdk/client.gen.ts": "0e3ee73d81868160c14d7577dbc79d4c3a339fa920b767be984449666a1f9879",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/sdk/client.ts": "b879f0a00d27c231bfce8ec70ad3f320d5d5b40b3f58f1af37303639d3f18c63",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/sdk/context.ts": "827aedd9ef20c4c9ab8b53f3f466bc85de62860e031cad91d248ce2f994c3e19",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/sdk/utils.ts": "02826cbba0b5dec6f4ec7085002abc9e6dca727c0dc0b922bdec43b539412fd3",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/src/dagger/jobs.ts": "0649a5a55175136e4de37b5b1f43bb80c9f5c428bd03b6d970d9fe304e61d0df",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/src/dagger/lib.ts": "bca10e5c8a04ad358824c91172f6e92a1d19ea80d2e6a1ab1e2aeafeea49effd",
+    "https://pkg.fluentci.io/supabase_pipeline@v0.4.2/src/dagger/list_jobs.ts": "8be404f17d8f0ebc5e3abc5f69972ed4b4bb1686c869bdefab00446b022fbbeb",
     "https://sdk.fluentci.io/v0.3.0/deps.ts": "3a145e76b4345a9a7888f09b1b48cb54523ebfa43247a1abebc40a9e82d555f4",
     "https://sdk.fluentci.io/v0.3.0/mod.ts": "261ba81a4728f5def4e327a5cd80664ea8449515a2f4eea5f3f416acae39a1fa",
     "https://sdk.fluentci.io/v0.3.0/src/client.ts": "7f1df4b1fee62dd6f946fa9d15d47a37b938ffb4ac91faf3d39b44b83d4f5921",
