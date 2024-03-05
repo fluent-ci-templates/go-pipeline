@@ -11,6 +11,8 @@ export enum Job {
 export const exclude = ["vendor", ".git"];
 
 /**
+ * Run tests
+ *
  * @function
  * @description Run tests
  * @param {string | Directory | undefined} src
@@ -20,7 +22,7 @@ export async function test(
   src: Directory | string | undefined = "."
 ): Promise<string> {
   let result = "";
-  const context = await getDirectory(dag, src);
+  const context = await getDirectory(src);
   const ctr = dag
     .pipeline(Job.test)
     .container()
@@ -35,6 +37,8 @@ export async function test(
 }
 
 /**
+ * Format the project
+ *
  * @function
  * @description Format the project
  * @param {string | Directory | undefined} src
@@ -43,7 +47,7 @@ export async function test(
 export async function fmt(
   src: Directory | string | undefined = "."
 ): Promise<Directory | string> {
-  const context = await getDirectory(dag, src);
+  const context = await getDirectory(src);
   const ctr = dag
     .pipeline(Job.fmt)
     .container()
@@ -60,6 +64,8 @@ export async function fmt(
 }
 
 /**
+ * Build binary
+ *
  * @function
  * @description Build binary
  * @param {string | Directory | undefined} src
@@ -68,7 +74,7 @@ export async function fmt(
 export async function build(
   src: Directory | string | undefined = "."
 ): Promise<Directory | string> {
-  const context = await getDirectory(dag, src);
+  const context = await getDirectory(src);
   const ctr = dag
     .pipeline(Job.build)
     .container()

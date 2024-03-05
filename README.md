@@ -2,10 +2,13 @@
 
 [![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fgo_pipeline&query=%24.version)](https://pkg.fluentci.io/go_pipeline)
 [![deno module](https://shield.deno.dev/x/go_pipeline)](https://deno.land/x/go_pipeline)
-![deno compatibility](https://shield.deno.dev/deno/^1.37)
+![deno compatibility](https://shield.deno.dev/deno/^1.41)
 [![](https://img.shields.io/codecov/c/gh/fluent-ci-templates/go-pipeline)](https://codecov.io/gh/fluent-ci-templates/go-pipeline)
+[![](https://jsr.io/badges/@fluentci/go)](https://jsr.io/@fluentci/go)
+[![ci](https://github.com/fluent-ci-templates/go-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/fluent-ci-templates/go-pipeline/actions/workflows/ci.yml)
 
 A ready-to-use CI/CD Pipeline for your Go projects.
+
 ## 🚀 Usage
 
 Run the following command in your project:
@@ -28,15 +31,22 @@ Now you can run the pipeline with:
 fluentci run .
 ```
 
-## Dagger Module
+## 🧩 Dagger Module
 
 Use as a [Dagger](https://dagger.io) module:
 
 ```sh
-dagger mod install github.com/fluent-ci-templates/go-pipeline@mod
+dagger install github.com/fluent-ci-templates/go-pipeline@mod
 ```
 
-## Jobs
+Call a function from the module:
+
+```sh
+dagger call test --src .
+dagger call build --src .
+```
+
+## ✨ Jobs
 
 | Job   | Description        |
 | ----- | ------------------ |
@@ -56,12 +66,12 @@ fmt(
 test(src?:  Directory | string = "."): Promise<string>
 ```
 
-## Programmatic usage
+## 👨‍💻 Programmatic usage
 
 You can also use this pipeline programmatically:
 
 ```ts
-import { fmt, test, build } from "https://pkg.fluentci.io/go_pipeline@v0.9.3/mod.ts";
+import { fmt, test, build } from "jsr:@fluentci/go";
 
 await fmt();
 await test();
